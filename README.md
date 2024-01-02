@@ -1,35 +1,63 @@
-<h1 align="center">starter-ts</h1>
+<h1 align="center">Vue CRDT</h1>
 
 <p align="center">
-  <a href="https://unpkg.com/starter-ts">
-    <img src="https://img.shields.io/bundlephobia/minzip/starter-ts" alt="Minzip">
+  <a href="https://unpkg.com/vue-crdt">
+    <img src="https://img.shields.io/bundlephobia/minzip/vue-crdt" alt="Minzip">
   </a>
-  <a href="https://www.npmjs.com/package/starter-ts">
-    <img src="https://img.shields.io/npm/v/starter-ts.svg" alt="Version">
+  <a href="https://www.npmjs.com/package/vue-crdt">
+    <img src="https://img.shields.io/npm/v/vue-crdt.svg" alt="Version">
   </a>
-  <a href="https://www.npmjs.com/package/starter-ts">
-    <img src="https://img.shields.io/npm/dm/starter-ts" alt="Downloads">
+  <a href="https://www.npmjs.com/package/vue-crdt">
+    <img src="https://img.shields.io/npm/dm/vue-crdt" alt="Downloads">
   </a>
-  <a href="https://github.com/qq15725/starter-ts/issues">
-    <img src="https://img.shields.io/github/issues/qq15725/starter-ts" alt="Issues">
+  <a href="https://github.com/qq15725/vue-crdt/issues">
+    <img src="https://img.shields.io/github/issues/qq15725/vue-crdt" alt="Issues">
   </a>
-  <a href="https://github.com/qq15725/starter-ts/blob/main/LICENSE">
-    <img src="https://img.shields.io/npm/l/starter-ts.svg" alt="License">
+  <a href="https://github.com/qq15725/vue-crdt/blob/main/LICENSE">
+    <img src="https://img.shields.io/npm/l/vue-crdt.svg" alt="License">
   </a>
 </p>
 
-## Try it now!
+## 📦 Install
 
-### GitHub Template
+```shell
+npm i vue-crdt
+```
 
-[Create a repo from this template on GitHub](https://github.com/qq15725/starter-ts/generate).
 
-### Clone to local
+## 🦄 Usage
 
-If you prefer to do it manually with the cleaner git history
+```ts
+import { reactive, ref } from 'vue'
+import { defineStore, useHistory } from 'vue-crdt'
 
-```bash
-npx degit qq15725/starter-ts my-ts-lib
-cd my-ts-lib
-pnpm i # If you don't have pnpm installed, run: npm install -g pnpm
+const useEditorStore = defineStore(doc => {
+  // use y-webrtc
+  //
+  // new WebrtcProvider(
+  //  'your-room-name',
+  //  doc,
+  //  { password: 'optional-room-password' },
+  // )
+
+  return {
+    workspace: reactive({
+      pages: { a: 'b' },
+      activePage: null,
+    }),
+    width: ref(800),
+    height: ref(600),
+  }
+})
+
+const { workspace, width, height } = useEditorStore()
+
+const history = useHistory(workspace)
+
+workspace.activePage = 123
+history.stopCapturing()
+workspace.activePage = 456
+history.undo()
+
+console.log(workspace)
 ```
