@@ -22,6 +22,9 @@
 
 ```shell
 npm i vue-crdt
+
+// peerDependencies
+npm i yjs
 ```
 
 
